@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<script type="text/javascript" src="aws-sdk.min.js"></script>
+		<script type="text/javascript" src="amazon-cognito-js.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/rollups/sha256.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/components/hmac.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/components/enc-base64.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/url-template/url-template.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/apigClient.js"></script>
+		<script type="text/javascript">
+
+			AWS.config.region = 'YOUR REGION'; // Region
+			AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+			    IdentityPoolId: 'YOUR REGION:YOUR POOL ID',
+			});
+
+			// Initialize the Cognito Sync client
+			AWS.config.credentials.get(function(){
+
+			    // Credentials will be available when this function is called.
+			    var accessKeyId = AWS.config.credentials.accessKeyId;
+			    var secretAccessKey = AWS.config.credentials.secretAccessKey;
+			    var sessionToken = AWS.config.credentials.sessionToken;
+
+			    console.log(accessKeyId);
+			    console.log(secretAccessKey);
+			    console.log(sessionToken);
+
+					var identityId = AWS.config.credentials.identityId;
+
+					console.log(identityId);
+
+			    var apigClient = apigClientFactory.newClient(
+				    {
+	            accessKey: accessKeyId,
+	            secretKey: secretAccessKey,
+	            sessionToken: sessionToken,
+	            region: AWS.config.region,
+	            apiKey: undefined,
+	            defaultContentType: 'application/json',
+	            defaultAcceptType: 'application/json'
+				    }
+		    	);
+
+			    console.log(
+				    {
+	            accessKey: accessKeyId,
+	            secretKey: secretAccessKey,
+	            sessionToken: sessionToken,
+	            region: AWS.config.region,
+	            apiKey: undefined,
+	            defaultContentType: 'application/json',
+	            defaultAcceptType: 'application/json'
+				    }
+		    	);
+			    console.log(apigClient);
+
+					var params = {
+					  // This is where any modeled request parameters should be added. 
+					  // The key is the parameter name, as it is defined in the API in API Gateway.
+					};
+
+					var body = {
+					  // This is where you define the body of the request,
+					};
+
+					var additionalParams = {
+					  // If there are any unmodeled query parameters or headers that must be 
+					  //   sent with the request, add them here.
+							  headers: {
+							  },
+							  queryParams: {
+							    param0: '',
+								  foo:"1234",
+							    param1: ''
+							  }
+  					};
+
+					apigClient.rootGet(params, body, additionalParams)
+					    .then(function(result){
+					      // Add success callback code here.
+
+					      console.log(result);
+					    }).catch( function(result){
+					      // Add error callback code here.
+					    });
+
+			});
+
+
+
+		</script>
+	</head>
+	<body></body>
+</html>
